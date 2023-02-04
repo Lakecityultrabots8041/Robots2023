@@ -5,6 +5,8 @@ public class Constants {
     public class IDs {
         //IDs of Talons
         public class Talon {
+            public static final int driveLeftTop = 5;
+            public static final int driveRightTop = 6;
             public static final int intake = 14;
             //Need to use phoenix tuner to upgrade the talons and set the ID on them as follows
             public static final int tunnel = 15; 
@@ -66,7 +68,7 @@ public class Constants {
 
     //Operator Interface
     public class OI {
-        public static final boolean useTankDrive = true; //true to use tank (left track, right track), false to use arcade (throttle/turn)
+        public static final boolean useTankDrive = false; //true to use tank (left track, right track), false to use arcade (throttle/turn)
         public static final int leftJoy = 0;
         public static final int rightJoy = 1;
         public static final double kMaxDeadband = 0.90;

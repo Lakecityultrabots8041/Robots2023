@@ -5,6 +5,7 @@
 package frc.robot;
 //test
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -30,10 +31,12 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 public class Robot extends TimedRobot {
   private final WPI_VictorSPX m_leftfront = new WPI_VictorSPX(Constants.IDs.Victor.driveLeftFront);
   private final WPI_VictorSPX m_leftrear = new WPI_VictorSPX(Constants.IDs.Victor.driveLeftRear);
+  private final WPI_TalonSRX m_lefttop = new WPI_TalonSRX(Constants.IDs.Talon.driveLeftTop);
   private final WPI_VictorSPX m_rightfront = new WPI_VictorSPX(Constants.IDs.Victor.driveRightFront);
   private final WPI_VictorSPX m_rightrear = new WPI_VictorSPX(Constants.IDs.Victor.driveRightRear);
-  private final MotorControllerGroup m_leftMotor = new MotorControllerGroup(m_leftfront, m_leftrear);
-  private final MotorControllerGroup m_rightMotor = new MotorControllerGroup(m_rightfront, m_rightrear);
+  private final WPI_TalonSRX m_righttop = new WPI_TalonSRX(Constants.IDs.Talon.driveRightTop);
+  private final MotorControllerGroup m_leftMotor = new MotorControllerGroup(m_lefttop, m_leftfront, m_leftrear);
+  private final MotorControllerGroup m_rightMotor = new MotorControllerGroup(m_righttop, m_rightfront, m_rightrear);
   private final DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftMotor, m_rightMotor);
   private final Joystick m_leftJoystick = new Joystick(Constants.OI.leftJoy);
   private final Joystick m_rightJoystick = new Joystick(Constants.OI.rightJoy);
@@ -57,6 +60,10 @@ public class Robot extends TimedRobot {
     // Invert one side only usually, so that forward is green on the controller and backwards is red
     m_leftMotor.setInverted(Constants.DriveTrain.Left.isInverted);
     m_rightMotor.setInverted(Constants.DriveTrain.Right.isInverted);
+    //m_leftfront.follow(m_lefttop);
+    //m_leftrear.follow(m_lefttop);
+    m_lefttop.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+
     m_intake.setInverted(Constants.Collector.intakeIsInverted);
     m_intake.setNeutralMode(NeutralMode.Brake);
     m_gearShift.set(DoubleSolenoid.Value.kForward);
@@ -157,7 +164,7 @@ public class Robot extends TimedRobot {
       switch (Constants.Auton.autonName) {
         case "Basic": //Basic Auton
           if (m_timer.get() < 2.0) { //2 seconds
-            m_robotDrive.arcadeDrive(-Constants.Auton.kAutonDriveSpeed, 0.0); //drive forward at 50% speed
+            m_robotDrive.arcadeDrive(-Constants.Auton.kAutonDriveSpeed, 0.0); //drive forward at 60% speed
           } else {
             m_robotDrive.stopMotor(); //stop
           }

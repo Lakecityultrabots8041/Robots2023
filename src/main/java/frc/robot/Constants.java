@@ -7,7 +7,7 @@ public class Constants {
         public class Talon {
             public static final int intake = 14;
             //Need to use phoenix tuner to upgrade the talons and set the ID on them as follows
-            public static final int tunnel = 11; 
+            public static final int tunnel = 15; 
             public static final int shooterLeft = 12;
             public static final int shooterRight = 13;
         }
